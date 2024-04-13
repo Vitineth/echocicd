@@ -44,6 +44,16 @@ Then you can run the deployer! This is what will actually run the images written
 $ $ echocicd --etcd-endpoints=<endpoints> agent
 ```
 
+### Webhooks
+
+Once setup, you can configure Gitea to send webhooks for your repositories! To do this, go into the settings for your
+repository, add a new webhook that targets `http://<host>:15342/hook` with a `POST` request of `application/json`
+for `Push Events`. You don't need to specify any authorization info (what is security anyway).
+
+> [!NOTE]
+> The webhook host will need to be whitelisted in your gitea settings. Additionally, you need to make sure the gitea
+> servers name in the config is accurate as that will be the address that the builder uses to clone the project.
+
 ## Deploy Configs
 
 You can explore the code for the exact schemas for deploy configs, however an example is posted here for reference
