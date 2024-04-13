@@ -74,10 +74,12 @@ domain = { port = 1343, host = "testing.domain.localhost" }
 ```
 
 This uses the `golang` builder included in this repository. Most of this should hopefully clear, `exclude` entries will
-be written to a `.dockerignore` file prior to building. `builder.args` will be converted to JSON and saved to the ENV
-var `BUILDER_ARGS_ENV` for use in the builder (sorry if you're using bash...). Ports are expressed
-as `internal = external`. And `domain` is not required and will be written as a label for use with the caddy docker
-integration described on my blog.
+be written to a `.dockerignore` file prior to building. `builder.args` will be converted to JSON and passed into the
+Dockerfile as the argument `BUILDER_ARGS` (ie your Dockerfile should contain `ARG BUILDER_ARGS={}` if you need them) for
+use in the builder. If you want to use these in external build scripts, the current recommended way is probably to
+either write the content to a file somehow or convert it to an env var using `ENV BUILDER_ARGS_ENV=${BUILDER_ARGS}` (
+this is used in the golang builder). Ports are expressed as `internal = external`. And `domain` is not required and will
+be written as a label for use with the caddy docker integration described on my blog.
 
 ## Builders
 
